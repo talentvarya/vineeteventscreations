@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { api } from "@/lib/api";
+import { supabase } from "@/lib/api";
 
 const AuthContext = createContext(null);
 
@@ -8,27 +8,32 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("vec_token");
-    if (!token) {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session ? { id: session.user.id, email: session.user.email } : null);
       setLoading(false);
-      return;
-    }
-    api
-      .get("/auth/me")
-      .then((res) => setUser(res.data))
-      .catch(() => localStorage.removeItem("vec_token"))
-      .finally(() => setLoading(false));
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session ? { id: session.user.id, email: session.user.email } : null);
+    });
+
+    return () => listener.subscription.unsubscribe();
   }, []);
 
   const login = async (email, password) => {
-    const { data } = await api.post("/auth/login", { email, password });
-    localStorage.setItem("vec_token", data.token);
-    setUser(data.user);
-    return data.user;
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      const err = new Error(error.message);
+      err.response = { data: { detail: "Login failed. Check your credentials." } };
+      throw err;
+    }
+    const loggedInUser = { id: data.user.id, email: data.user.email };
+    setUser(loggedInUser);
+    return loggedInUser;
   };
 
-  const logout = () => {
-    localStorage.removeItem("vec_token");
+  const logout = async () => {
+    await supabase.auth.signOut();
     setUser(null);
   };
 
