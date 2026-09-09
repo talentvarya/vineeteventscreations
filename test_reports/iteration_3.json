@@ -1,0 +1,45 @@
+{
+  "summary": "Iteration 3 full-stack testing complete for Reel Videos, Artist Categories Filter, Testimonial Uploads, and Homepage Ordering. Backend: 36/36 pytest tests pass (10 iteration-1 regressions + 15 iteration-2 + 11 new iteration-3). New tests cover: public GET /api/testimonials (5 seeded), auth protection on POST/DELETE /api/admin/testimonials and PATCH /api/admin/media, testimonial create/get/delete + soft-delete removes from public list + 404 on second delete, /api/media sorted asc by sort_order, PATCH /api/admin/media sort_order swap persistence, PATCH title/is_reel updates, PATCH nonexistent -> 404, video mp4 upload returns kind='video' and appears in /api/media?reel=true, /api/files serves testimonial storage_path (200 while active, 404 after soft-delete). Frontend: (a) /artists Star Roster shows [artist-filter-all] + 6 category tabs (bollywood/bhangra/russian-international/dj/live-band/mascot); All shows 6, clicking Bollywood filters to 1, back to All restores 6. (b) /testimonials page renders all 5 seeded names (Ananya, Karan, Priya, Sahil, Vikram). (c) Admin Testimonials tab: added a testimonial via name/role/rating(4-star)/text -> list grew 5->6, unique name visible, delete button removes it -> back to 5. (d) Admin Media Gallery reorder buttons EXIST but are BLOCKED for real user clicks by the category badge span rendered on top (see critical UI bug below); backend PATCH + move() handler logic verified working when invoked via DOM .click() (swap of first two items succeeded and API reflected the new sort_order, then restored). (e) Home page shows 6 instagram-reel cards (seeded reels are images; no video items seeded so autoplay attribute could not be visually verified live, but InstagramFeed.jsx source has autoPlay muted loop playsInline on the <video> element - confirmed via code review).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "AdminMedia media card overlay",
+        "issue": "Category badge <span> at absolute top-2 left-2 (line 139-142 of AdminMedia.jsx) is rendered AFTER the hover overlay in DOM order and therefore sits on top of the media-up/media-down buttons, intercepting pointer events. Playwright confirms 'subtree intercepts pointer events' error on real click. Even force=True click fails to reorder. Backend PATCH and move() handler both work when triggered via el.click() bypassing hit-test. Result: an actual user cannot reorder media by clicking the up/down arrows in the top-left of a card — feature #4 (Homepage Ordering) is effectively broken through the UI. Fix: add `pointer-events-none` to the badge container div, OR give the overlay's action-row a higher z-index (z-20) and `pointer-events-auto`, OR move the badges to bottom-left / opposite corner from the arrows.",
+        "selector": "[data-testid^='media-item-'] .absolute.top-2.left-2, [data-testid^='media-up-'], [data-testid^='media-down-']",
+        "priority": "HIGH"
+      }
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/backend/tests/test_media_artists.py",
+    "/app/backend/tests/test_iteration3.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "HIGH: Fix AdminMedia.jsx overlay stacking so users can actually click the media-up/media-down arrows. Simplest fix: add `pointer-events-none` to the `<div className='absolute top-2 left-2 flex gap-1'>` at line ~139, since it only shows informational badges.",
+    "(Optional) Seed at least one video reel or exercise a real .mp4 upload path in UI QA to visually confirm autoplay on Instagram feed."
+  ],
+  "critical_code_review_comments": [
+    "AdminMedia.jsx move() calls Promise.all of two PATCH requests then load(); if only one PATCH succeeds you get an inconsistent order in DB. Consider a single backend endpoint to swap two sort_orders atomically, or verify both responses before load().",
+    "AdminMedia.jsx uses window.confirm() for delete; Playwright needs a dialog handler. Consider replacing with a shadcn/ui AlertDialog for consistency and testability.",
+    "TestimonialCreate model doesn't validate rating range (0-5). Consider `rating: int = Field(5, ge=1, le=5)`.",
+    "server.py put_object/get_object still use sync `requests` inside async endpoints — same feedback as iteration 2; blocks event loop under concurrency.",
+    "server.py create_media sets sort_order=max+1 but seed_content assigns sort_order starting at 0. When admin adds new media, it ends up at the END (correct). However create_testimonial always assigns sort_order=0, which will collide with seeded testimonials — consider max+1 for consistency.",
+    "seed_content: `is_reel: i < 6` seeds the first 6 media as reels — coupled to seed order, fine but brittle if the seed list changes.",
+    "AdminMedia badge div lacks pointer-events-none, hits the arrow buttons (see UI bug)."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iteration3.py"
+  ],
+  "success_rate": {"backend": "100% (36/36)", "frontend": "80% (Artist filter, Testimonials CRUD, public pages OK; Media reorder broken via UI click)"},
+  "test_credentials": "admin@vineetevents.com / Admin@123 (from /app/memory/test_credentials.md). LocalStorage token key is `vec_token`.",
+  "seed_data_creation": "Created + deleted TEST_UI_* testimonials via admin UI; created + deleted TEST_* media/testimonials via API in pytest (all cleaned up). Seeded media/testimonial/artist counts (13/5/6) verified intact.",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Run: `python -m pytest backend/tests/ -o addopts= -v` (36 tests). Frontend token stored in localStorage as `vec_token`. Media reorder UI bug: the top-2 left-2 badge span intercepts pointer events over the media-up/media-down buttons; workaround for automation is to call element.click() via page.evaluate. Public testimonials page URL: /testimonials. Admin Testimonials tab is [data-testid=admin-tab-testimonials]. Rating buttons: [data-testid=testimonial-rating-{1..5}].",
+  "rca of the issue": "AdminMedia.jsx line 139-142 renders `<div class='absolute top-2 left-2 flex gap-1'><span>category</span>{reel && <span/>}</div>` OUTSIDE and AFTER the group-hover overlay div (line 123-138) that contains the up/down/delete buttons. Both are positioned absolutely at top-left with no z-index / no `pointer-events-none` on the badges. Because the badge div is later in the DOM, its span children win the pointer hit-test at the exact coordinates of the media-up (top-2 left-2) and media-down buttons. Real user clicks fall on the badge and do nothing. Reproduction: (1) login admin, (2) go to Media Gallery, (3) hover any card, (4) attempt to click the up-arrow (or down-arrow) icon in the top-left → nothing happens. Verified via Playwright which reported: `<span class='...'>weddings</span> subtree intercepts pointer events`. Mitigation: add `className='absolute top-2 left-2 flex gap-1 pointer-events-none'` to the badge container div; the badges are purely informational and don't need clicks."
+}

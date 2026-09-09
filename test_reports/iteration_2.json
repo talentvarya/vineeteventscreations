@@ -1,0 +1,42 @@
+{
+  "summary": "Iteration 2 full-stack testing complete for media/upload, instagram feed, and bookable artists. Backend: 25/25 pytest tests pass (10 iteration-1 regressions in backend_test.py + 15 new tests in test_media_artists.py covering public media/artists list with reel & category filters, auth protection on all 6 /api/admin/* endpoints, full upload -> create media -> serve via /api/files -> soft-delete flow with public list & file 404 verification, non-media file rejection, missing-source 400, and artist create/patch/soft-delete). Frontend: (a) Home page renders 6 instagram-reel-* cards with Follow button. (b) /artists shows 6 star-roster cards; clicking artist-book-{id} opens the enquiry modal. (c) /events shows 13 gallery items, 7 category filters, lightbox opens with prev/next and 'Book This' CTA. (d) Admin login -> Media Gallery tab: upload PNG via [data-testid=media-uploader-input], set title, select category (native <select>), tick reel checkbox, click Add to Gallery -> new item appears (13 -> 14). Delete removes it (14 -> 13). (e) Admin Artists tab: Add Artist modal opens, upload photo, fill name/category/availability/bio, save -> new artist appears (6 -> 7). Edit changes availability successfully. Delete removes it (7 -> 6) with 'Artist removed' toast. Regression: admin login, enquiries endpoints, chatbot (Gemini 3 Flash) still pass.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "DELETE /api/admin/media/{id} & /api/admin/artists/{id}", "issue": "Second delete of an already-soft-deleted record returns 200 (record still matched). Prefer filtering on is_deleted:false in update filter so idempotent double-delete returns 404, matching HTTP semantics used elsewhere in the app."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {"flow": "Admin media upload preview", "issue": "Brief 404 in browser console for /api/files/{new_path} right after upload — the grid appears to attempt to render the image before/after the interim state; final render works. Likely a transient race between upload response and grid refetch. Low priority.", "affected_selectors": ["media-uploader-input"]}
+    ],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/backend/tests/test_media_artists.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "(Optional) Harden soft-delete endpoints to return 404 when record is already is_deleted=true.",
+    "(Optional) Suppress transient 404 in AdminMedia grid by only rendering thumbnails after DB record confirmed created."
+  ],
+  "critical_code_review_comments": [
+    "server.py get_current_user still calls ObjectId(payload['sub']) inside try but ObjectId.is_valid() check is done — good. However bson.errors.InvalidId is not caught, only jwt errors are; the ObjectId.is_valid guard covers it in practice.",
+    "serve_file uses fresh get_object each request without any caching layer; Cache-Control:public,max-age=86400 is set on response which is good.",
+    "put_object/get_object are sync 'requests' calls inside async endpoints — this blocks the event loop under load. Consider running via asyncio.to_thread or use httpx.AsyncClient.",
+    "seed_content skips seeding if any doc exists — safe. Uploads path pattern APP_NAME/uploads/{uuid}.{ext} is fine.",
+    "list_media/list_artists exclude _id via projection — good. Also filter is_deleted:{$ne:True} — good.",
+    "MediaCreate.kind lacks validation (accepts any string); consider Literal['image','video']. Same for category values but they are user-defined in admin so ok."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_media_artists.py"
+  ],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "test_credentials": "admin@vineetevents.com / Admin@123 (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "Created and cleaned up TEST_UI_* media and TEST_ART_* artists via UI; TEST_ enquiries via API (all soft-deleted / removed).",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Backend pytest at /app/backend/tests/ (25 tests). Run with 'python -m pytest backend/tests/ -o addopts= -v'. Admin data-testids for media/artists all functional. Category select in AdminMedia is a native <select>, works with page.select_option(value='weddings'). Uploader input is hidden type=file; use set_input_files. dialog handler needed if native confirm() ever used (not used currently). Object storage path format is APP_NAME/uploads/{uuid}.{ext} and public serve requires the media/artist record to exist and !is_deleted."
+}
