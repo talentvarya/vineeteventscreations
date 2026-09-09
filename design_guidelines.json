@@ -1,0 +1,268 @@
+{
+  "project_name": "Vineet Events Creations",
+  "tagline": "Dhamakedar Live Event Experience - Royal, Luxurious & Unforgettable",
+  "theme": "Dark Royal Gold & Explosive Neon Accent",
+  "color_palette": {
+    "background_dark": "#0A0508",
+    "background_card": "#140A10",
+    "background_card_border": "rgba(234, 179, 8, 0.2)",
+    "royal_gold": {
+      "primary": "#EAB308",
+      "bright": "#FACC15",
+      "metallic": "#D97706",
+      "light_gold": "#FEF08A",
+      "glow": "rgba(234, 179, 8, 0.4)"
+    },
+    "deep_maroon_red": {
+      "primary": "#881337",
+      "dark": "#4C0519",
+      "crimson": "#E11D48",
+      "bright_red": "#F43F5E",
+      "glow": "rgba(225, 29, 72, 0.5)"
+    },
+    "neon_accents": {
+      "electric_amber": "#FFB800",
+      "fire_orange": "#FF4D00",
+      "magenta_burst": "#FF007A",
+      "laser_cyan": "#00F0FF"
+    },
+    "text": {
+      "primary": "#FDF8F6",
+      "secondary": "#E2D9DC",
+      "muted": "#A89A9E",
+      "gold_highlight": "#FDE047"
+    }
+  },
+  "typography": {
+    "font_strategy": "High-impact Display Fonts for Headings, Elegant Serif for Subheadings/Accent, High-legibility Sans-Serif for Body",
+    "heading_font_family": "'Cinzel', 'Playfair Display', sans-serif",
+    "secondary_serif_family": "'Cormorant Garamond', 'Cinzel Decorative', serif",
+    "body_font_family": "'Outfit', 'Plus Jakarta Sans', sans-serif",
+    "hierarchy": {
+      "h1_hero": "text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none uppercase drop-shadow-[0_4px_24px_rgba(234,179,8,0.5)]",
+      "h2_section": "text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4",
+      "h3_card": "text-xl sm:text-2xl font-semibold text-yellow-400",
+      "body_large": "text-base sm:text-lg text-slate-200 leading-relaxed",
+      "body_regular": "text-sm sm:text-base text-slate-300 leading-normal",
+      "accent_label": "text-xs font-bold tracking-[0.25em] text-yellow-500 uppercase"
+    }
+  },
+  "spacing_and_layout": {
+    "philosophy": "Generous Spacing (2x-3x padding) for luxury & royal breathability",
+    "container_padding": "px-4 sm:px-8 lg:px-16 py-12 sm:py-20",
+    "bento_grid_mode": "Tetris Asymmetric Grid for visual excitement & entertainment shockwave",
+    "hero_overlay": "bg-gradient-to-t from-[#0A0508] via-black/60 to-black/30"
+  },
+  "key_features_and_micro_interactions": {
+    "hero_cinematic": "Full-screen video / particle canvas background with fireworks/spark effects, explosive headline typography, and pulsating 'Book Your Event' CTA button.",
+    "animated_stat_counters": "19+ Years Experience, 2500+ Grand Events, 500+ Celebrity & Artist Bookings, 100% Dhamaka Guarantee with animated counter scroll trigger.",
+    "service_highlight_cards": "Glow/pulse hover states with 1px animated gold/fire borders, category badges, and quick-enquire action.",
+    "filterable_artist_and_event_gallery": "Masonry multi-tab lightbox grid filtering by (All, Weddings, Indian Artists, International/Russian Artists, Mascots, Special Effects, Sound & Lights). Includes video preview modals.",
+    "draggable_whatsapp_floating_button": "Pulsing green-gold floating badge with direct pre-filled WhatsApp inquiry link ('Hi Vineet Events, I want to book an event...').",
+    "ai_chatbot_widget": "Interactive 'Dhamaka Event AI Assistant' widget for instant cost estimation, venue suggestions in Dehradun & PAN India, artist recommendations, and booking query.",
+    "enquiry_popup_form": "Royal gold modal form with interactive multi-step service selector, date picker, budget estimator, guest count, and instant submission.",
+    "confetti_burst_success": "Explosive canvas confetti explosion on form submit success with instant quote ID and SMS/WhatsApp confirmation toast.",
+    "parallax_particles": "Canvas spark/firefly particle overlay floating in dark gold/maroon sections.",
+    "admin_dashboard": "Secure admin panel (credentials: admin@vineetevents.com / dhamaka123) with Enquiries Management, Status tracking (Pending, Contacted, Booked, Archived), Filters, Stats Analytics, and Add New Event/Artist."
+  },
+  "pages_structure": [
+    {
+      "page_id": "home",
+      "title": "Home - Vineet Events Creations",
+      "sections": [
+        "Header Navigation (Logo, Nav Links, Call Now Button, Enquire CTA)",
+        "Hero Section (Cinematic Video/Spark Bg, Dhamakedar Punch Headline, Quick Inquiry Bar)",
+        "Stats Banner (19+ Years, 2500+ Events, 500+ Artists, 100% Satisfaction)",
+        "Core Services Carousel / Bento Grid (Weddings, Artists, Russian Performers, Mascots, Pyro FX, Stage & Lights)",
+        "Dhamaka Special Effects Showcase (Cold Pyro, CO2 Jets, Confetti, Fire Curtain, Fog)",
+        "Artist & Celebrity Roster Spotlight (Bollywood, Bhangra, Russian Belly Dancers, Live Bands)",
+        "Interactive Event Cost Estimator Tool",
+        "Recent Grand Events Gallery Highlight",
+        "Testimonials Carousel (Real Client Video/Quotes with Royal Badges)",
+        "Latest Entertainment Insights (Blog Grid)",
+        "Footer (Quick Links, PAN India Coverage, Dehradun Office Address, Social Handles)"
+      ]
+    },
+    {
+      "page_id": "about",
+      "title": "About Us - 19+ Years of Royal Celebrations",
+      "sections": [
+        "Company History & Founder's Vision (Vineet Events Journey since 2007)",
+        "Core Values: Punctuality, Royalty, Explosive Entertainment, Flawless Production",
+        "PAN India Event Capability Map (Dehradun, Delhi NCR, Jaipur, Goa, Mumbai & Destination Weddings)",
+        "Safety & Pyrotechnics Quality Certifications",
+        "Behind The Scenes / Production Team Roster"
+      ]
+    },
+    {
+      "page_id": "services",
+      "title": "Services - Complete 360° Event Management",
+      "sections": [
+        "Subsections with Tabbed Switchers:",
+        "1. Event Planning & Management (Weddings, Pre-wedding Haldi/Sangeet, Corporate, Bride/Groom Theme Entries)",
+        "2. Indian Artist Provider (Bollywood Dance Troop, Bhangra, Folk, Live Singers & Bands, Celebrities)",
+        "3. International & Russian Artist Provider (Russian Belly Dancers, Welcome Girls, Foreign Performers, Flair Bartenders)",
+        "4. Mascot & Character Artists (Mickey/Minnie, Astronaut, Gorilla/Panda, Superheroes for Kids & Themes)",
+        "5. Special Effects (Cold Pyro, Dry Ice Fog, CO2 Jets, Confetti Blast, Fire Effects, Laser & Projection Mapping)",
+        "6. Production & Technical Setup (P.A Sound Systems, Intelligent Stage Lighting, Trussing, DJ Setup)"
+      ]
+    },
+    {
+      "page_id": "artist_gallery",
+      "title": "Artist Gallery & Talent Roster",
+      "sections": [
+        "Category Filters (All, Bollywood & Bhangra, Russian/International, Live Bands & Singers, Mascots & Characters, Anchor & DJs)",
+        "Artist Cards with Hover Sound/Video Modal, Roster Details & One-Click Booking Button",
+        "Direct Artist Enquiry Modal"
+      ]
+    },
+    {
+      "page_id": "events_gallery",
+      "title": "Events Portfolio & Photo/Video Gallery",
+      "sections": [
+        "Filterable Masonry Grid (Royal Weddings, Sangeet Nights, Corporate Galas, Concerts & Celebrity Nights)",
+        "Lightbox Modal with Fullscreen Zoom & Video Player",
+        "Client Event Case Studies"
+      ]
+    },
+    {
+      "page_id": "testimonials",
+      "title": "Client Reviews & Video Testimonials",
+      "sections": [
+        "Star-rated Royal Feedback Cards from High-Profile Clients & Families",
+        "Video Testimonials Gallery",
+        "Review Submission Form"
+      ]
+    },
+    {
+      "page_id": "blog",
+      "title": "Entertainment & Event Trends Blog",
+      "sections": [
+        "Featured Post: 'Top 10 Bride & Groom Theme Entry Ideas in 2026'",
+        "Article 2: 'How Cold Pyro & Dry Ice Elevate Your First Dance'",
+        "Article 3: 'Choosing the Perfect Artist Roster for Sangeet & Reception'",
+        "Article 4: 'Corporate Event Production Checklist for PAN India Meets'",
+        "Individual Article Reader Modal / Page"
+      ]
+    },
+    {
+      "page_id": "contact",
+      "title": "Contact Us - Book Your Event Today",
+      "sections": [
+        "Royal Booking Form with Service Selection, Date, Location, Budget",
+        "Dehradun Head Office Address & Map Embed Details",
+        "Direct Call, WhatsApp, Email Details",
+        "Instant FAQ Accordion"
+      ]
+    },
+    {
+      "page_id": "admin",
+      "title": "Admin Management Panel",
+      "sections": [
+        "Login Screen (Preset Admin Credentials Info Note)",
+        "Analytics KPI Cards (Total Enquiries, Pending, Confirmed Revenue, High Priority Bookings)",
+        "Enquiries Table with Search, Filter by Service, Status Change, Notes, Export to CSV",
+        "Add New Event Showcase / Artist Modal",
+        "System Settings & WhatsApp Notification Toggle"
+      ]
+    }
+  ],
+  "image_urls": {
+    "hero_backgrounds": [
+      "https://images.unsplash.com/photo-1510682657356-6ee07db8204b?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "https://images.unsplash.com/photo-1506157786151-b8491531f063?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "https://images.unsplash.com/photo-1723743809746-15c7b0e7bcf1?crop=entropy&cs=srgb&fm=jpg&q=85"
+    ],
+    "artists_and_performers": [
+      {
+        "category": "Indian Artists / Fire Show",
+        "url": "https://images.unsplash.com/photo-1783255334056-8561f4291710?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "title": "Bollywood & Folk Fire Dancers"
+      },
+      {
+        "category": "Folk & Spinning Dancers",
+        "url": "https://images.unsplash.com/photo-1598975762861-28118e88154e?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "title": "Royal Sufi & Ghoomar Troupe"
+      },
+      {
+        "category": "Stage Dancers",
+        "url": "https://images.unsplash.com/photo-1709806811488-dacc478d1001?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "title": "Punjabi Bhangra & Cultural Artists"
+      },
+      {
+        "category": "Live Band & Singers",
+        "url": "https://images.unsplash.com/photo-1735886576987-dbb08d624504?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "title": "Bollywood Vocalists & Live Orchestra"
+      },
+      {
+        "category": "International Performers",
+        "url": "https://images.unsplash.com/photo-1574155376612-bfa4ed8aabfd?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "title": "Russian Belly Dancers & Welcome Girls"
+      }
+    ],
+    "special_fx_and_tech": [
+      {
+        "title": "Laser & CO2 Projection",
+        "url": "https://images.unsplash.com/photo-1510682657356-6ee07db8204b?crop=entropy&cs=srgb&fm=jpg&q=85"
+      },
+      {
+        "title": "Cold Pyro Spark Fountains",
+        "url": "https://images.unsplash.com/photo-1723743809746-15c7b0e7bcf1?crop=entropy&cs=srgb&fm=jpg&q=85"
+      },
+      {
+        "title": "Concert Sound & Stage Light Setup",
+        "url": "https://images.unsplash.com/photo-1506157786151-b8491531f063?crop=entropy&cs=srgb&fm=jpg&q=85"
+      }
+    ]
+  },
+  "data_testid_guidelines": {
+    "general": "Every button, link, form field, tab, card, modal toggle, and interactive element MUST have a unique descriptive data-testid.",
+    "examples": [
+      "data-testid='nav-link-home'",
+      "data-testid='nav-link-services'",
+      "data-testid='nav-link-artist-gallery'",
+      "data-testid='nav-link-events-gallery'",
+      "data-testid='nav-link-testimonials'",
+      "data-testid='nav-link-blog'",
+      "data-testid='nav-link-contact'",
+      "data-testid='nav-link-admin'",
+      "data-testid='hero-enquire-now-button'",
+      "data-testid='hero-call-now-button'",
+      "data-testid='service-tab-wedding'",
+      "data-testid='service-tab-artists'",
+      "data-testid='service-tab-international'",
+      "data-testid='service-tab-mascot'",
+      "data-testid='service-tab-pyro'",
+      "data-testid='service-tab-production'",
+      "data-testid='gallery-filter-all'",
+      "data-testid='gallery-filter-weddings'",
+      "data-testid='gallery-filter-artists'",
+      "data-testid='enquiry-form-name-input'",
+      "data-testid='enquiry-form-phone-input'",
+      "data-testid='enquiry-form-service-select'",
+      "data-testid='enquiry-form-date-input'",
+      "data-testid='enquiry-form-budget-select'",
+      "data-testid='enquiry-form-submit-button'",
+      "data-testid='chatbot-open-button'",
+      "data-testid='chatbot-input-field'",
+      "data-testid='chatbot-send-button'",
+      "data-testid='whatsapp-floating-button'",
+      "data-testid='admin-login-username'",
+      "data-testid='admin-login-password'",
+      "data-testid='admin-login-submit'",
+      "data-testid='admin-search-input'",
+      "data-testid='admin-status-filter'",
+      "data-testid='admin-add-enquiry-button'"
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Follow the exact dark royal gold aesthetic (#0A0508 background, #EAB308 royal gold, #881337 deep maroon, #FF4D00 fire orange accents). Never use plain white or corporate blue backgrounds.",
+    "Implement high-energy micro-interactions: glowing/pulsing buttons, confetti explosion on form submission using canvas-confetti, floating spark particle canvas overlay, smooth Framer Motion entrance animations.",
+    "Build a complete multi-page experience using React Router DOM with persistent top header navigation and footer.",
+    "Include a functional AI Chatbot widget with smart automated responses for booking queries, pricing ranges, and venue advice.",
+    "Include a floating draggable WhatsApp button anchored to bottom right with pulse animation.",
+    "Build the Admin Login & Dashboard flow with local storage persistence, demo data pre-populated, search, filter, status toggles, and new enquiry creator.",
+    "Ensure 100% responsive design from mobile devices to large screens, maintaining APCA/WCAG contrast compliance across gold text against dark backgrounds.",
+    "Include data-testid on every interactive element."
+  ]
+}
