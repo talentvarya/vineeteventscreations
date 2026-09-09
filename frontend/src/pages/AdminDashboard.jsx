@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import {
   Sparkles, LogOut, Search, Trash2, Phone, Mail, Download, Loader2,
-  Inbox, Clock, PhoneCall, CheckCircle2, Archive, Pencil, X,
+  Inbox, Clock, PhoneCall, CheckCircle2, Archive, Pencil, X, KeyRound,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
-import { api } from "@/lib/api";
+import { api, supabase } from "@/lib/api";
 import { AdminMedia } from "@/components/admin/AdminMedia";
 import { AdminArtists } from "@/components/admin/AdminArtists";
 import { AdminTestimonials } from "@/components/admin/AdminTestimonials";
@@ -29,10 +29,36 @@ export default function AdminDashboard() {
   const [filter, setFilter] = useState("all");
   const [busy, setBusy] = useState(true);
   const [tab, setTab] = useState("enquiries");
+  const [changingPassword, setChangingPassword] = useState(false);
+  const [pwForm, setPwForm] = useState({ password: "", confirm: "" });
+  const [pwSaving, setPwSaving] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) navigate("/admin");
   }, [user, loading, navigate]);
+
+  const changePassword = async () => {
+    if (pwForm.password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+    if (pwForm.password !== pwForm.confirm) {
+      toast.error("Passwords do not match");
+      return;
+    }
+    setPwSaving(true);
+    try {
+      const { error } = await supabase.auth.updateUser({ password: pwForm.password });
+      if (error) throw error;
+      toast.success("Password updated");
+      setChangingPassword(false);
+      setPwForm({ password: "", confirm: "" });
+    } catch (err) {
+      toast.error(err.message || "Could not update password");
+    } finally {
+      setPwSaving(false);
+    }
+  };
 
   const load = async () => {
     try {
@@ -152,12 +178,50 @@ export default function AdminDashboard() {
           </div>
           <div className="flex items-center gap-4">
             <span className="hidden sm:block text-sm text-slate-300">{user?.email}</span>
+            <button data-testid="admin-change-password-button" onClick={() => setChangingPassword(true)} className="flex items-center gap-2 text-sm font-semibold text-yellow-300 hover:text-yellow-200">
+              <KeyRound className="w-4 h-4" /> <span className="hidden sm:inline">Change Password</span>
+            </button>
             <button data-testid="admin-logout-button" onClick={() => { logout(); navigate("/admin"); }} className="flex items-center gap-2 text-sm font-semibold text-red-400 hover:text-red-300">
               <LogOut className="w-4 h-4" /> Logout
             </button>
           </div>
         </div>
       </header>
+
+      {changingPassword && (
+        <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={() => setChangingPassword(false)}>
+          <div className="relative w-full max-w-sm glass-card rounded-2xl p-6 gold-border-glow" onClick={(e) => e.stopPropagation()}>
+            <button onClick={() => setChangingPassword(false)} className="absolute top-4 right-4 text-slate-400 hover:text-yellow-400"><X className="w-6 h-6" /></button>
+            <h3 className="font-display text-xl font-bold gold-gradient-text mb-4">Change Password</h3>
+            <div className="space-y-3">
+              <input
+                data-testid="admin-new-password-input"
+                type="password"
+                value={pwForm.password}
+                onChange={(e) => setPwForm((f) => ({ ...f, password: e.target.value }))}
+                placeholder="New password"
+                className="w-full bg-[#1e0f18] border border-yellow-500/20 rounded-lg px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-yellow-500/60"
+              />
+              <input
+                data-testid="admin-confirm-password-input"
+                type="password"
+                value={pwForm.confirm}
+                onChange={(e) => setPwForm((f) => ({ ...f, confirm: e.target.value }))}
+                placeholder="Confirm new password"
+                className="w-full bg-[#1e0f18] border border-yellow-500/20 rounded-lg px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-yellow-500/60"
+              />
+              <button
+                data-testid="admin-save-password-button"
+                onClick={changePassword}
+                disabled={pwSaving}
+                className="w-full btn-glow bg-gradient-to-r from-yellow-500 to-amber-600 text-[#0A0508] font-bold py-2.5 rounded-full disabled:opacity-60"
+              >
+                {pwSaving ? "Saving..." : "Update Password"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="flex gap-2 mb-8 border-b border-yellow-500/15">
