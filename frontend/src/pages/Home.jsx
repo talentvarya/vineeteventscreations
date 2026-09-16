@@ -9,10 +9,16 @@ import { EnquiryForm } from "@/components/EnquiryForm";
 import { useEnquiry } from "@/context/EnquiryContext";
 import { BUSINESS, STATS, SERVICES, GALLERY, TESTIMONIALS, BLOGS, IMAGES } from "@/data/content";
 import { InstagramFeed } from "@/components/InstagramFeed";
+import { Seo } from "@/components/Seo";
 import { api, mediaSrc } from "@/lib/api";
 import { useState, useEffect } from "react";
 
-const HERO_IMAGES = [IMAGES.heroConcert, IMAGES.heroWedding, IMAGES.heroPyro, IMAGES.heroConfetti];
+const HERO_IMAGES = [
+  { src: IMAGES.heroConcert, alt: "Live concert stage lighting at a Vineet Events Creations show" },
+  { src: IMAGES.heroWedding, alt: "Grand Indian wedding decor by Vineet Events Creations" },
+  { src: IMAGES.heroPyro, alt: "Cold pyro special effects at a Vineet Events Creations event" },
+  { src: IMAGES.heroConfetti, alt: "Confetti celebration finale by Vineet Events Creations" },
+];
 
 const Hero = () => {
   const { openEnquiry } = useEnquiry();
@@ -30,7 +36,7 @@ const Hero = () => {
           className="absolute inset-0 transition-opacity"
           style={{ opacity: i === idx ? 1 : 0, transitionDuration: "1400ms" }}
         >
-          <img src={img} alt="" className="w-full h-full object-cover scale-105" />
+          <img src={img.src} alt={img.alt} className="w-full h-full object-cover scale-105" />
         </div>
       ))}
       <div className="absolute inset-0 hero-vignette" />
@@ -335,7 +341,7 @@ const FinalCTA = () => {
   return (
     <section className="relative py-20 sm:py-28 overflow-hidden">
       <div className="absolute inset-0">
-        <img src={IMAGES.heroConfetti} alt="" className="w-full h-full object-cover" />
+        <img src={IMAGES.heroConfetti} alt="Confetti and celebration lights background" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#0A0508]/85" />
       </div>
       <SparkParticles density={40} />
@@ -359,6 +365,11 @@ const FinalCTA = () => {
 export default function Home() {
   return (
     <>
+      <Seo
+        title="Vineet Events Creations | India's Most Dhamakedar Event Management"
+        description="Vineet Events Creations - India's most dhamakedar event management company. 19+ years of grand weddings, Russian dancers, Bollywood & Bhangra artists, mascots, special effects, DJ & celebrity bookings. PAN India, based in Dehradun."
+        path="/"
+      />
       <Hero />
       <StatsSection />
       <ServicesSection />

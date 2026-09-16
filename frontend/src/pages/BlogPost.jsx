@@ -1,7 +1,8 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { PageHero } from "@/components/Section";
-import { BLOGS } from "@/data/content";
+import { Seo } from "@/components/Seo";
+import { BLOGS, BUSINESS } from "@/data/content";
 import { useEnquiry } from "@/context/EnquiryContext";
 
 export default function BlogPost() {
@@ -18,8 +19,20 @@ export default function BlogPost() {
     );
   }
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    image: post.img,
+    datePublished: post.date,
+    author: { "@type": "Organization", name: BUSINESS.name },
+    publisher: { "@type": "Organization", name: BUSINESS.name },
+  };
+
   return (
     <>
+      <Seo title={`${post.title} - Vineet Events Creations`} description={post.excerpt} path={`/blog/${post.slug}`} image={post.img} jsonLd={articleJsonLd} />
       <PageHero eyebrow={`${post.tag} • ${post.date}`} title={post.title} image={post.img} />
       <article className="py-16 sm:py-24">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">

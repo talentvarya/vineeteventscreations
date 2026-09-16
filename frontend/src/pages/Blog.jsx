@@ -2,12 +2,19 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/Section";
+import { Seo } from "@/components/Seo";
 import { BLOGS, IMAGES } from "@/data/content";
 
 export default function Blog() {
   const [featured, ...rest] = BLOGS;
   return (
     <>
+      <Seo
+        title="Event Planning Blog | Tips & Trends - Vineet Events Creations"
+        description="Ideas and guides on wedding entries, cold pyro effects, Russian & international artists, Bollywood/Bhangra/Sufi artist line-ups and corporate event production."
+        path="/blog"
+        image={IMAGES.heroPyro}
+      />
       <PageHero eyebrow="Insights & Trends" title="The Dhamaka Blog" subtitle="Tips, trends & ideas to make your next event legendary." image={IMAGES.heroPyro} />
       <section className="py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">

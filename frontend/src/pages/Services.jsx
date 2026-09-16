@@ -3,10 +3,27 @@ import { motion, AnimatePresence } from "framer-motion";
 import * as Icons from "lucide-react";
 import { Check } from "lucide-react";
 import { PageHero } from "@/components/Section";
-import { SERVICES, IMAGES } from "@/data/content";
+import { Seo } from "@/components/Seo";
+import { SERVICES, IMAGES, BUSINESS } from "@/data/content";
 import { useEnquiry } from "@/context/EnquiryContext";
 
 const iconFor = (name) => Icons[name] || Icons.Sparkles;
+
+const SERVICES_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  itemListElement: SERVICES.map((s, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: {
+      "@type": "Service",
+      name: s.title,
+      description: s.tagline,
+      provider: { "@type": "LocalBusiness", name: BUSINESS.name },
+      areaServed: "IN",
+    },
+  })),
+};
 
 export default function Services() {
   const [active, setActive] = useState(SERVICES[0].id);
@@ -16,6 +33,13 @@ export default function Services() {
 
   return (
     <>
+      <Seo
+        title="Our Services | Wedding Planning, Artists, Mascots & Special Effects - Vineet Events Creations"
+        description="Full 360° event services: wedding & corporate planning, Bollywood/Bhangra/Sufi artists, Russian & international performers, mascots, cold pyro & special effects, DJ & production."
+        path="/services"
+        image={IMAGES.heroConcert}
+        jsonLd={SERVICES_JSON_LD}
+      />
       <PageHero eyebrow="360° Event Management" title="Our Services" subtitle="Everything you need for a dhamakedar event — under one royal roof." image={IMAGES.heroConcert} />
 
       <section className="py-16 sm:py-24">

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Star, Quote, PlayCircle } from "lucide-react";
 import { PageHero } from "@/components/Section";
+import { Seo } from "@/components/Seo";
 import { TESTIMONIALS, IMAGES } from "@/data/content";
 import { api, mediaSrc } from "@/lib/api";
 import { useEnquiry } from "@/context/EnquiryContext";
@@ -18,6 +19,12 @@ export default function Testimonials() {
 
   return (
     <>
+      <Seo
+        title="Client Testimonials & Reviews - Vineet Events Creations"
+        description="Real reviews from weddings, corporate galas and birthday parties across India — see why clients trust Vineet Events Creations for dhamakedar celebrations."
+        path="/testimonials"
+        image={IMAGES.heroConfetti}
+      />
       <PageHero eyebrow="Client Reviews" title="Loved By Our Clients" subtitle="Real stories from families and companies who trusted us with their big day." image={IMAGES.heroConfetti} />
 
       {videos.length > 0 && (

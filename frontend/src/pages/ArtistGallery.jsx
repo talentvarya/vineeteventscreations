@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { CalendarCheck, Star } from "lucide-react";
 import { PageHero, SectionHeading } from "@/components/Section";
+import { Seo } from "@/components/Seo";
 import { FilterGallery } from "@/components/FilterGallery";
 import { GALLERY, IMAGES } from "@/data/content";
 import { api, mediaSrc } from "@/lib/api";
@@ -43,6 +44,12 @@ export default function ArtistGallery() {
 
   return (
     <>
+      <Seo
+        title="Artist Gallery | Bollywood, Russian Dancers, Bhangra & Mascots - Vineet Events Creations"
+        description="500+ bookable performers — Bollywood dance troupe, Bhangra dancers, Sufi band, Russian dancers, Russian welcome hostess, mascots & DJ-based bands, PAN India."
+        path="/artists"
+        image={IMAGES.heroConcert}
+      />
       <PageHero eyebrow="Talent Roster" title="Artist Gallery" subtitle="500+ performers — Bollywood, Bhangra, Russian dancers, mascots, DJs & celebrities." image={IMAGES.heroConcert} />
 
       <section className="py-16 sm:py-24">

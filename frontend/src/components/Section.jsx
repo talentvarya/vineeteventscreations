@@ -39,7 +39,7 @@ export const SectionHeading = ({ eyebrow, title, subtitle, center = true }) => (
 export const PageHero = ({ eyebrow, title, subtitle, image }) => (
   <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-24 overflow-hidden">
     <div className="absolute inset-0">
-      <img src={image} alt="" className="w-full h-full object-cover" />
+      <img src={image} alt={title ? `${title} - Vineet Events Creations` : ""} className="w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-b from-[#0A0508]/85 via-[#0A0508]/80 to-[#0A0508]" />
     </div>
     <div className="relative max-w-5xl mx-auto px-4 sm:px-6 text-center">

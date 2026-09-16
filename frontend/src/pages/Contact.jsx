@@ -2,12 +2,13 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, MessageCircle, ChevronDown } from "lucide-react";
 import { PageHero, SectionHeading } from "@/components/Section";
+import { Seo } from "@/components/Seo";
 import { EnquiryForm } from "@/components/EnquiryForm";
 import { BUSINESS, FAQS, IMAGES } from "@/data/content";
 
-const CONTACTS = [
-  { icon: Phone, label: "Call Us", value: BUSINESS.phone, href: `tel:${BUSINESS.phoneRaw}` },
-  { icon: MessageCircle, label: "WhatsApp", value: "+974 71913089", href: `https://wa.me/${BUSINESS.whatsapp}` },
+const WHATSAPP_TEXT = encodeURIComponent("Hi Vineet Events Creations, I want to book an event. Please share details.");
+
+const OTHER_CONTACTS = [
   { icon: Mail, label: "Email", value: BUSINESS.email, href: `mailto:${BUSINESS.email}` },
   { icon: MapPin, label: "Visit Us", value: BUSINESS.address, href: "#map" },
 ];
@@ -32,13 +33,53 @@ const Faq = ({ q, a, idx }) => {
 export default function Contact() {
   return (
     <>
+      <Seo
+        title="Contact Us | Book Your Event - Vineet Events Creations"
+        description="Get in touch with Vineet Events Creations for a free consultation. Call, WhatsApp or fill our enquiry form — Dehradun based, serving PAN India."
+        path="/contact"
+        image={IMAGES.heroConfetti}
+      />
       <PageHero eyebrow="Get In Touch" title="Book Your Event Today" subtitle="Free consultation • Custom plan • Quick callback. Let's create magic!" image={IMAGES.heroConfetti} />
 
       <section className="py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12">
           <div>
+            <div className="glass-card rounded-xl p-5 border border-yellow-500/15 mb-4">
+              <div className="text-xs text-yellow-500 uppercase tracking-wide font-bold mb-3">Call or WhatsApp Us</div>
+              <div className="grid grid-cols-2 gap-3">
+                <a
+                  href={`tel:${BUSINESS.phoneRaw}`}
+                  data-testid="contact-call-us"
+                  className="flex items-center gap-3 rounded-lg p-3 border border-yellow-500/15 hover:gold-border-glow transition-all"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-yellow-500 to-amber-600 flex items-center justify-center shrink-0">
+                    <Phone className="w-5 h-5 text-[#0A0508]" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-400 font-semibold">Call</div>
+                    <div className="text-slate-200 text-sm break-words">{BUSINESS.phone}</div>
+                  </div>
+                </a>
+                <a
+                  href={`https://wa.me/${BUSINESS.whatsapp}?text=${WHATSAPP_TEXT}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-testid="contact-whatsapp"
+                  className="flex items-center gap-3 rounded-lg p-3 border border-green-500/20 hover:border-green-400/60 transition-all"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center shrink-0">
+                    <MessageCircle className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-400 font-semibold">WhatsApp</div>
+                    <div className="text-slate-200 text-sm break-words">+91 8588838594</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
             <div className="grid sm:grid-cols-2 gap-4 mb-8">
-              {CONTACTS.map((c) => (
+              {OTHER_CONTACTS.map((c) => (
                 <a
                   key={c.label}
                   href={c.href}

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { PageHero, SectionHeading } from "@/components/Section";
+import { Seo } from "@/components/Seo";
 import { StatCounter } from "@/components/StatCounter";
 import { SparkParticles } from "@/components/SparkParticles";
 import { BUSINESS, STATS, IMAGES } from "@/data/content";
@@ -27,6 +28,12 @@ export default function About() {
   const { openEnquiry } = useEnquiry();
   return (
     <>
+      <Seo
+        title="About Us | 19+ Years of Event Management Experience - Vineet Events Creations"
+        description="Founded in 2007 in Dehradun, Vineet Events Creations has delivered 2500+ grand weddings, corporate events and celebrations PAN India with a 500+ artist network."
+        path="/about"
+        image={IMAGES.heroWedding}
+      />
       <PageHero eyebrow="Since 2007" title="19+ Years of Royal Celebrations" subtitle="From a small Dehradun dream to India's most dhamakedar event company." image={IMAGES.heroWedding} />
 
       <section className="py-20 sm:py-28">

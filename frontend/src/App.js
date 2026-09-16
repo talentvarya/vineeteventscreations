@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { AuthProvider } from "@/context/AuthContext";
 import { EnquiryProvider } from "@/context/EnquiryContext";
 import { Header } from "@/components/Header";
@@ -7,6 +8,8 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Chatbot } from "@/components/Chatbot";
 import { EnquiryModal } from "@/components/EnquiryModal";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { SITE_URL } from "@/components/Seo";
+import { BUSINESS } from "@/data/content";
 import { Toaster } from "sonner";
 
 import Home from "@/pages/Home";
@@ -21,8 +24,33 @@ import Contact from "@/pages/Contact";
 import AdminLogin from "@/pages/AdminLogin";
 import AdminDashboard from "@/pages/AdminDashboard";
 
+const ORGANIZATION_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: BUSINESS.name,
+  image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200",
+  url: SITE_URL,
+  telephone: BUSINESS.phone,
+  email: BUSINESS.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Canal Road",
+    addressLocality: "Dehradun",
+    addressRegion: "Uttarakhand",
+    postalCode: "248001",
+    addressCountry: "IN",
+  },
+  areaServed: "IN",
+  sameAs: [BUSINESS.instagram, BUSINESS.facebook, BUSINESS.youtube],
+  description:
+    "Event management & entertainment company in Dehradun, PAN India — weddings, Bollywood & Russian artists, mascots, special effects, DJ & sound production.",
+};
+
 const SiteLayout = ({ children }) => (
   <>
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(ORGANIZATION_JSON_LD)}</script>
+    </Helmet>
     <Header />
     <main className="min-h-screen">{children}</main>
     <Footer />
