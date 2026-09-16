@@ -4,7 +4,14 @@
 const path = require("path");
 const http = require("http");
 const fs = require("fs");
-const puppeteer = require("puppeteer");
+
+// Vercel's build container is a minimal Linux image without the shared
+// libraries (libnss3, etc.) that a normal Puppeteer-downloaded Chromium
+// needs to launch. @sparticuz/chromium ships a Chromium build made for
+// exactly that kind of sandboxed environment, so we use it there and fall
+// back to a regular local Puppeteer install (with its own Chromium) when
+// developing locally.
+const isVercel = !!process.env.VERCEL;
 
 const buildDir = path.join(__dirname, "..", "build");
 const PORT = 45678;
@@ -65,11 +72,25 @@ function createServer() {
   });
 }
 
+async function launchBrowser() {
+  if (isVercel) {
+    const chromium = require("@sparticuz/chromium");
+    const puppeteerCore = require("puppeteer-core");
+    return puppeteerCore.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    });
+  }
+  const puppeteer = require("puppeteer");
+  return puppeteer.launch({ args: ["--no-sandbox", "--disable-setuid-sandbox"] });
+}
+
 async function run() {
   const server = createServer();
   await new Promise((resolve) => server.listen(PORT, resolve));
 
-  const browser = await puppeteer.launch({ args: ["--no-sandbox", "--disable-setuid-sandbox"] });
+  const browser = await launchBrowser();
 
   for (const route of ROUTES) {
     const page = await browser.newPage();
