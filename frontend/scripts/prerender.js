@@ -114,6 +114,9 @@ async function run() {
 }
 
 run().catch((err) => {
-  console.error(err);
-  process.exit(1);
+  // A broken prerender step (e.g. Chromium failing to launch in a constrained build
+  // container) must never fail the whole deployment - the site still works perfectly
+  // without prerendered HTML, just without this SEO enhancement. Warn loudly, exit clean.
+  console.error("Prerendering failed - deploying WITHOUT prerendered pages:", err.message);
+  process.exit(0);
 });
