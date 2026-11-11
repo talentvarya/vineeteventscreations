@@ -8,8 +8,8 @@ export const BUSINESS = {
   email: "vineet.eventsncreations@gmail.com",
   address: "Canal Road, Dehradun, Uttarakhand, India 248001",
   years: "19+",
-  instagram: "https://instagram.com",
-  facebook: "https://facebook.com",
+  instagram: "https://www.instagram.com/vineet.events.creations/",
+  facebook: "https://www.facebook.com/profile.php?id=61593294065085",
   youtube: "https://youtube.com",
 };
 
