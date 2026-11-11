@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://frontend-three-psi-22.vercel.app/sitemap.xml
+Sitemap: https://vineet-events-creations.vercel.app/sitemap.xml

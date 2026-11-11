@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { IMAGES } from "@/data/content";
 
-export const SITE_URL = "https://frontend-three-psi-22.vercel.app";
+export const SITE_URL = "https://vineet-events-creations.vercel.app";
 
 export const Seo = ({ title, description, path = "/", image, jsonLd }) => {
   const url = `${SITE_URL}${path}`;
