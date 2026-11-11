@@ -74,6 +74,11 @@ function createServer() {
 
 async function launchBrowser() {
   if (isVercel) {
+    // @sparticuz/chromium only unpacks the Amazon Linux 2023 shared libraries (libnss3 etc.)
+    // when it believes it runs on the AWS Lambda Node 20/22 runtime. Vercel's build container
+    // is the same OS but does not set this flag, which made Chromium fail with
+    // "libnss3.so: cannot open shared object file". Set it before the package is loaded.
+    process.env.AWS_EXECUTION_ENV = "AWS_Lambda_nodejs22.x";
     const chromium = require("@sparticuz/chromium");
     const puppeteerCore = require("puppeteer-core");
     return puppeteerCore.launch({
