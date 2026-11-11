@@ -111,11 +111,14 @@ export const api = {
     }
 
     if (path === "/chat") {
-      return {
-        data: {
-          reply: "Sorry, AI chat abhi is site par configure nahi hai. Aap humein direct call kar sakte hain +91-8588838594 par ya WhatsApp karein.",
-        },
-      };
+      const fallback = "Sorry, chat abhi available nahi hai. Aap humein call ya WhatsApp kar sakte hain: +91-8588838594";
+      try {
+        const { data, error } = await supabase.functions.invoke("chat", { body });
+        if (error || !data || !data.reply) return { data: { reply: fallback } };
+        return { data: { reply: data.reply } };
+      } catch (e) {
+        return { data: { reply: fallback } };
+      }
     }
 
     if (path === "/auth/login") {

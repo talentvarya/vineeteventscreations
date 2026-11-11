@@ -35,7 +35,7 @@ export const Chatbot = () => {
     setMessages((m) => [...m, { role: "user", content: msg }]);
     setLoading(true);
     try {
-      const { data } = await api.post("/chat", { session_id: sessionId.current, message: msg });
+      const { data } = await api.post("/chat", { session_id: sessionId.current, message: msg, history: messages.slice(-6) });
       setMessages((m) => [...m, { role: "assistant", content: data.reply }]);
     } catch (e) {
       setMessages((m) => [...m, { role: "assistant", content: "Sorry, technical issue! Call us at +91-8588838594." }]);
